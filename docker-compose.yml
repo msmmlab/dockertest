@@ -1,0 +1,29 @@
+version: '3'
+services:
+# node app
+  node-app:
+    build:  .
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+  # MongoDB
+  mongo:
+    image: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=djerq
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    volumes:
+      - mongo-db:/data/db
+  # Postgres
+  postgres:
+    image: postgres
+    ports:
+      - "5432:5432"
+    env_file:
+      - ./.env
+    volumes:
+      - postgres-data:/var/lib/postgresql/data/
+volumes:
+  mongo-db:
+  postgres-data:
